@@ -1,6 +1,3 @@
-
-
-
 pipeline {
   agent {
     kubernetes {
@@ -10,7 +7,7 @@ pipeline {
         spec:
           containers:
           - name: semgrep
-            image 'returntocorp/semgrep-agent:v1'
+            image: 'returntocorp/semgrep-agent:v1'
             command:
             - cat
             tty: true
