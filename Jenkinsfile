@@ -31,7 +31,7 @@ pipeline {
     SEMGREP_REPO_NAME = env.GIT_URL.replaceFirst(/^https:\/\/github.com\/(.*).git$/, '$1')
     
     SEMGREP_COMMIT = "${GIT_COMMIT}"
-    SEMGREP_PR_ID = env.CHANGE_ID
+    SEMGREP_PR_ID = "${env.CHANGE_ID}"
 
   }
 
