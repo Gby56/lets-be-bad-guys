@@ -31,20 +31,17 @@ pipeline {
     SEMGREP_REPO_NAME = env.GIT_URL.replaceFirst(/^https:\/\/github.com\/(.*).git$/, '$1')
     
     SEMGREP_COMMIT="${GIT_COMMIT}"
+    SEMGREP_PR_ID=pullRequest.id
+    SEMGREP_PR_TITLE=pullRequest.title
     
   }
 
   stages {
     stage('Semgrep_agent') {
+      when {
+        expression { env.CHANGE_ID ==~ /.*/ }
+      }
       steps{
-         script {
-             if (env.CHANGE_ID) {
-                environment {
-                  SEMGREP_PR_ID=pullRequest.id
-                  SEMGREP_PR_TITLE=pullRequest.title
-                }
-            }
-         }
         sh 'env && python -m semgrep_agent --publish-token $SEMGREP_APP_TOKEN --publish-deployment $SEMGREP_DEPLOYMENT_ID'
       }
    }
