@@ -25,13 +25,14 @@ pipeline {
     // environment variables for semgrep_agent (for findings / analytics page)
     // remove .git at the end
     SEMGREP_REPO_URL = env.GIT_URL.replaceFirst(/^(.*).git$/,'$1')
-    SEMGREP_BRANCH = "${CHANGE_BRANCH.substring(CHANGE_BRANCH.indexOf('-')+1)}"
+    SEMGREP_BRANCH = "${CHANGE_BRANCH}"
     SEMGREP_JOB_URL = "${BUILD_URL}"
     // remove SCM URL + .git at the end
     SEMGREP_REPO_NAME = env.GIT_URL.replaceFirst(/^https:\/\/github.com\/(.*).git$/, '$1')
     
     SEMGREP_COMMIT = "${GIT_COMMIT}"
     SEMGREP_PR_ID = "${env.CHANGE_ID}"
+    BASELINE_BRANCH = env.CHANGE_TARGET
 
   }
 
@@ -41,7 +42,7 @@ pipeline {
         expression { env.CHANGE_ID && env.BRANCH_NAME.startsWith("PR-") }
       }
       steps{
-        sh 'env && python -m semgrep_agent --publish-token $SEMGREP_APP_TOKEN --publish-deployment $SEMGREP_DEPLOYMENT_ID'
+        sh 'env && python -m semgrep_agent --publish-token $SEMGREP_APP_TOKEN --publish-deployment $SEMGREP_DEPLOYMENT_ID --baseline-branch $BASELINE_BRANCH'
       }
    }
   }
