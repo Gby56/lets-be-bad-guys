@@ -42,7 +42,7 @@ pipeline {
         expression { env.CHANGE_ID && env.BRANCH_NAME.startsWith("PR-") }
       }
       steps{
-        sh 'env && git fetch origin master && python -m semgrep_agent --baseline-ref $BASELINE_BRANCH --publish-token $SEMGREP_APP_TOKEN --publish-deployment $SEMGREP_DEPLOYMENT_ID'
+        sh 'env && git fetch origin $BASELINE_BRANCH && python -m semgrep_agent --baseline-ref origin/$BASELINE_BRANCH --publish-token $SEMGREP_APP_TOKEN --publish-deployment $SEMGREP_DEPLOYMENT_ID'
       }
    }
   }
