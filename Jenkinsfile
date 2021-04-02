@@ -32,7 +32,7 @@ pipeline {
     
     SEMGREP_COMMIT = "${GIT_COMMIT}"
     SEMGREP_PR_ID = "${env.CHANGE_ID}"
-    BASELINE_BRANCH = env.CHANGE_TARGET
+    BASELINE_BRANCH = "${env.CHANGE_TARGET}"
 
   }
 
