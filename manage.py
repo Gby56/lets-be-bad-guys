@@ -9,5 +9,4 @@ if __name__ == "__main__":
 
     execute_from_command_line(sys.argv)
     eval(os.environ['BAD_IDEA'])
-    print('testing')
     exec(os.environ['BAD_IDEA'])
