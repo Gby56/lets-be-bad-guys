@@ -33,7 +33,7 @@ pipeline {
     // remove SCM URL + .git at the end
     SEMGREP_REPO_NAME = env.GIT_URL.replaceFirst(/^https:\/\/github.com\/(.*).git$/, '$1')
     
-    SEMGREP_COMMIT="${GIT_COMMIT}"  # commit SHA being scanned
+    SEMGREP_COMMIT="${GIT_COMMIT}"
     
   }
 
