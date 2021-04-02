@@ -15,12 +15,7 @@ pipeline {
       defaultContainer 'semgrep'
     }
   }
-  if (env.CHANGE_ID) {
-      environment {
-        SEMGREP_PR_ID=pullRequest.id
-        SEMGREP_PR_TITLE=pullRequest.title
-      }
-  }
+
   environment {
 
     // secrets for Semgrep org ID and auth token
@@ -42,6 +37,14 @@ pipeline {
   stages {
     stage('Semgrep_agent') {
       steps{
+         script {
+             if (env.CHANGE_ID) {
+                environment {
+                  SEMGREP_PR_ID=pullRequest.id
+                  SEMGREP_PR_TITLE=pullRequest.title
+                }
+            }
+         }
         sh 'env && python -m semgrep_agent --publish-token $SEMGREP_APP_TOKEN --publish-deployment $SEMGREP_DEPLOYMENT_ID'
       }
    }
